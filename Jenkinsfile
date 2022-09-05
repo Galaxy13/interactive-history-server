@@ -3,9 +3,9 @@ pipeline {
   stages {
     stage('Log Tool Versions') {
       steps {
-        sh '''sudo apk install python
-sudo apk install git
-sudo apk install docker'''
+        sh '''apt-get install python
+apt-get install git
+apt-get install docker'''
       }
     }
 
