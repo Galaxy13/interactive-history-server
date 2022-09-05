@@ -3,9 +3,9 @@ pipeline {
   stages {
     stage('Log Tool Versions') {
       steps {
-        sh '''conda --version
-docker --version
-git --version'''
+        sh '''sudo apk install python
+sudo apk install git
+sudo apk install docker'''
       }
     }
 
