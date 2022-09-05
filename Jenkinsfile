@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('Log Tool Versions') {
       steps {
-        sh '''python --version
+        sh '''conda --version
 docker --version
 git --version'''
       }
