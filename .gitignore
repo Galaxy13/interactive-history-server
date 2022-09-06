@@ -1,0 +1,4 @@
+app/dbtest*.py
+app/requests*.http
+app/secret.py
+app/.dockerignore
