@@ -40,6 +40,15 @@ async def open_lesson(lesson_id: str):
     raise HTTPException(status_code=404, detail=f'No lesson with id {lesson_id} existing')
 
 
+@app.get('api/v1/lessons/{lesson_id}/{slide_number}', response_decription='Open slide by number', response_model=List)
+async def open_slide_by_number(lesson_id: str, slide_number: str):
+    if db.find_lesson_by_id(lesson_id):
+        if (slide := db.open_lesson_slide(lesson_id, slide_number)) is not None:
+            return jsonable_encoder(slide['objects'])
+        raise HTTPException(status_code=404, detail=f'No slide in {lesson_id} with {slide_number} number')
+    raise HTTPException(status_code=404, detail=f'No lesson with id {lesson_id} existing')
+
+
 @app.post('/api/v1/classes', response_description='Add new class', response_model=Class)
 async def create_class(class_obj: Class = Body(...)):
     class_obj = jsonable_encoder(class_obj)
@@ -57,6 +66,7 @@ async def create_lesson(class_id, lesson_obj: Lesson = Body(...)):
         created_lesson = db.show_created_lesson(new_lesson)
         return JSONResponse(status_code=status.HTTP_201_CREATED, content=created_lesson)
     raise HTTPException(status_code=404, detail=f'Class with id: {class_id} is not existing')
+
 
 @app.post('/api/v1/lessons/{lesson_id}', response_description='Create new slide', response_model=Slide)
 async def create_slide(lesson_id, slide_obj: Slide = Body(...)):
